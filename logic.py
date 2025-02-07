@@ -79,8 +79,16 @@ class DatabaseManager:
         with conn:
             cur = conn.cursor()
             cur.execute('SELECT * FROM users')
-        return [x[0] for x in cur.fetchall()] 
-        
+        return [x[0] for x in cur.fetchall()]
+    ###сам 
+    def get_winners(self):
+        conn = sqlite3.connect(self.database)
+        with conn:
+            cur = conn.cursor()
+            cur.execute('SELECT * FROM winners')
+        return [x[0] for x in cur.fetchall()]  
+    ###сам
+    
     def get_prize_img(self, prize_id):
         conn = sqlite3.connect(self.database)
         with conn:

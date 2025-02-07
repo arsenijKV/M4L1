@@ -65,7 +65,8 @@ def handle_rating(message):
     res = f'|USER_NAME    |COUNT_PRIZE|\n{"_"*26}\n' + res
     bot.send_message(message.chat.id, res)
     
-    
+
+
     
 @bot.callback_query_handler(func=lambda call: True)
 def callback_query(call):
@@ -85,6 +86,19 @@ def callback_query(call):
     else:
         bot.send_message(user_id, "К сожалению, ты не успел получить картинку! Попробуй в следующий раз!)")
 
+@bot.message_handler(commands=['score'])
+def handle_score(message):
+    user_id = message.chat.id 
+    if user_id in manager.get_winners:
+        res = manager.get_winners_img(user_id)
+        if res:
+           img = manager.get_winners_img(user_id)
+           with open(f'img/{img}', 'rb') as photo:
+               bot.send_photo(user_id, photo)
+        else:
+            bot.send_message(user_id, 'ничего нету')
+    else:
+        bot.send_message(user_id, 'не побеждал')
 
 
 
