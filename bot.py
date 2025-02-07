@@ -7,6 +7,7 @@ import time
 from config import *
 
 bot = TeleBot(API_TOKEN)
+bonus = (0)
 
 def gen_markup(id):
     markup = InlineKeyboardMarkup()
@@ -32,6 +33,7 @@ def send_message():
     for user in manager.get_users():
         with open(f'hidden_img/{img}', 'rb') as photo:
             bot.send_photo(user, photo, reply_markup=gen_markup(id = prize_id))
+        
         
 
 def shedule_thread():
@@ -76,7 +78,8 @@ def callback_query(call):
         if res:
             img = manager.get_prize_img(prize_id)
             with open(f'img/{img}', 'rb') as photo:
-                bot.send_photo(user_id, photo, caption="Поздравляем! Ты получил картинку!")
+                
+                bot.send_photo(user_id, photo, bonus =+ 1,caption="Поздравляем! Ты получил картинку!")
         else:
             bot.send_message(user_id, 'Ты уже получил картинку!')
     else:
